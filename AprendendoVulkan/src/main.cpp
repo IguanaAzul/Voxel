@@ -12,7 +12,7 @@
 
 
 int main() {
-    VulkanMainClass vulkan;
+    VulkanTutorial vulkan;
     try {
         vulkan.run();
     }
