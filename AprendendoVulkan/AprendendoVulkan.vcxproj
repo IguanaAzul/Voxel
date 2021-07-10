@@ -156,10 +156,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\vulkan-initialization.cpp" />
+    <ClCompile Include="src\vulkan-tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\vulkan-initialization.h" />
+    <ClInclude Include="src\vulkan-tutorial.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

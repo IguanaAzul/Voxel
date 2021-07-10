@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <optional>
 
-#include "vulkan-initialization.h"
+#include "vulkan-tutorial.h"
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
 
@@ -39,14 +39,14 @@ void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT
     }
 }
 
-void VulkanInitializerClass::run() {
+void VulkanMainClass::run() {
     initWindow();
     initVulkan();
     mainLoop();
     cleanup();
 }
 
-void VulkanInitializerClass::initWindow() {
+void VulkanMainClass::initWindow() {
     glfwInit();
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -55,20 +55,20 @@ void VulkanInitializerClass::initWindow() {
     window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
 }
 
-void VulkanInitializerClass::initVulkan() {
+void VulkanMainClass::initVulkan() {
     createInstance();
     setupDebugMessenger();
     pickPhysicalDevice();
     createLogicalDevice();
 }
 
-void VulkanInitializerClass::mainLoop() {
+void VulkanMainClass::mainLoop() {
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
     }
 }
 
-void VulkanInitializerClass::cleanup() {
+void VulkanMainClass::cleanup() {
     vkDestroyDevice(device, nullptr);
 
     if (enableValidationLayers) {
@@ -82,14 +82,14 @@ void VulkanInitializerClass::cleanup() {
     glfwTerminate();
 }
 
-void VulkanInitializerClass::createInstance() {
+void VulkanMainClass::createInstance() {
     if (enableValidationLayers && !checkValidationLayerSupport()) {
         throw std::runtime_error("validation layers requested, but not available!");
     }
 
     VkApplicationInfo appInfo{};
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-    appInfo.pApplicationName = "Hello Triangle";
+    appInfo.pApplicationName = "Vulkan Tutorial";
     appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
     appInfo.pEngineName = "No Engine";
     appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
@@ -122,7 +122,7 @@ void VulkanInitializerClass::createInstance() {
     }
 }
 
-void VulkanInitializerClass::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
+void VulkanMainClass::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
     createInfo = {};
     createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
     createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
@@ -130,7 +130,7 @@ void VulkanInitializerClass::populateDebugMessengerCreateInfo(VkDebugUtilsMessen
     createInfo.pfnUserCallback = debugCallback;
 }
 
-void VulkanInitializerClass::setupDebugMessenger() {
+void VulkanMainClass::setupDebugMessenger() {
     if (!enableValidationLayers) return;
 
     VkDebugUtilsMessengerCreateInfoEXT createInfo;
@@ -141,7 +141,7 @@ void VulkanInitializerClass::setupDebugMessenger() {
     }
 }
 
-void VulkanInitializerClass::pickPhysicalDevice() {
+void VulkanMainClass::pickPhysicalDevice() {
     uint32_t deviceCount = 0;
     vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
 
@@ -164,7 +164,7 @@ void VulkanInitializerClass::pickPhysicalDevice() {
     }
 }
 
-void VulkanInitializerClass::createLogicalDevice() {
+void VulkanMainClass::createLogicalDevice() {
     QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
 
     VkDeviceQueueCreateInfo queueCreateInfo{};
@@ -202,13 +202,13 @@ void VulkanInitializerClass::createLogicalDevice() {
     vkGetDeviceQueue(device, indices.graphicsFamily.value(), 0, &graphicsQueue);
 }
 
-bool VulkanInitializerClass::isDeviceSuitable(VkPhysicalDevice device) {
+bool VulkanMainClass::isDeviceSuitable(VkPhysicalDevice device) {
     QueueFamilyIndices indices = findQueueFamilies(device);
 
     return indices.isComplete();
 }
 
-QueueFamilyIndices VulkanInitializerClass::findQueueFamilies(VkPhysicalDevice device) {
+QueueFamilyIndices VulkanMainClass::findQueueFamilies(VkPhysicalDevice device) {
     QueueFamilyIndices indices;
 
     uint32_t queueFamilyCount = 0;
@@ -233,7 +233,7 @@ QueueFamilyIndices VulkanInitializerClass::findQueueFamilies(VkPhysicalDevice de
     return indices;
 }
 
-std::vector<const char*> VulkanInitializerClass::getRequiredExtensions() {
+std::vector<const char*> VulkanMainClass::getRequiredExtensions() {
     uint32_t glfwExtensionCount = 0;
     const char** glfwExtensions;
     glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
@@ -247,7 +247,7 @@ std::vector<const char*> VulkanInitializerClass::getRequiredExtensions() {
     return extensions;
 }
 
-bool VulkanInitializerClass::checkValidationLayerSupport() {
+bool VulkanMainClass::checkValidationLayerSupport() {
     uint32_t layerCount;
     vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
@@ -272,7 +272,7 @@ bool VulkanInitializerClass::checkValidationLayerSupport() {
     return true;
 }
 
-VKAPI_ATTR VkBool32 VKAPI_CALL VulkanInitializerClass::debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData) {
+VKAPI_ATTR VkBool32 VKAPI_CALL VulkanMainClass::debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData) {
     std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
 
     return VK_FALSE;

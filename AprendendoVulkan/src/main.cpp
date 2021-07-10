@@ -8,13 +8,13 @@
 #include <cstdlib>
 #include <optional>
 
-#include "vulkan-initialization.h"
+#include "vulkan-tutorial.h"
 
 
 int main() {
-    VulkanInitializerClass app;
+    VulkanMainClass vulkan;
     try {
-        app.run();
+        vulkan.run();
     }
     catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;

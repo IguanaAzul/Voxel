@@ -11,7 +11,7 @@ struct QueueFamilyIndices {
     }
 };
 
-class VulkanInitializerClass {
+class VulkanMainClass {
 public:
     void run();
 private:
@@ -35,9 +35,9 @@ private:
     std::vector<const char*> getRequiredExtensions();
     bool checkValidationLayerSupport();
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
-        VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, 
-        VkDebugUtilsMessageTypeFlagsEXT messageType, 
-        const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, 
+        VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+        VkDebugUtilsMessageTypeFlagsEXT messageType,
+        const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
         void* pUserData
     );
 };
